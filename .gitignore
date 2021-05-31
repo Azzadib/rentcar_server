@@ -1,0 +1,5 @@
+/node_modules/
+/schema-reverse/
+/dist/
+/data/
+/npm debug.log/

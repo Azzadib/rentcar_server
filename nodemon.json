@@ -1,0 +1,5 @@
+{
+    "verbose": false,
+    "watch": ["./server"],
+    "exec": "babel-node ./server/server.js"
+}
