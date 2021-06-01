@@ -138,7 +138,7 @@ const login = async (req, res) => {
     try {
         const { user_password } = req.body
         const user = req.existsemail
-        if (!user) return res.status(400).send({ message: 'User not found.' })
+        if (!user) return res.status(404).send({ message: 'User not found.' })
 
         if (!user_password) return res.status(400).send({ message: 'Password can\'t be blank.' })
 
@@ -183,7 +183,7 @@ const updateUser = async (req, res) => {
         const oldUser = req.existsuser
         const oldEmail = req.existsemail
 
-        if (!oldUser) return res.status(400).send({ message: 'User to be updated not found.' })
+        if (!oldUser) return res.status(404).send({ message: 'User to be updated not found.' })
 
         if (oldEmail && oldUser.user_email !== oldEmail.user_email) return res.status(400).send({ message: 'New email is already exists.' })
         const emailFormat = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i

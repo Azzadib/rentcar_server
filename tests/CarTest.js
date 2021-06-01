@@ -19,7 +19,6 @@ describe('Rent car - Car', () => {
                 .field('car_door', 2)
                 .field('car_ac', 1)
                 .field('car_type', 'SUV')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
                 .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
                 .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
@@ -43,7 +42,6 @@ describe('Rent car - Car', () => {
                 .field('car_door', 2)
                 .field('car_ac', 1)
                 .field('car_type', 'SUV')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
                 .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
                 .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
@@ -67,7 +65,6 @@ describe('Rent car - Car', () => {
                 .field('car_door', 2)
                 .field('car_ac', 1)
                 .field('car_type', 'SUV')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
                 .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
                 .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
@@ -91,7 +88,6 @@ describe('Rent car - Car', () => {
                 .field('car_door', 2)
                 .field('car_ac', 1)
                 .field('car_type', 'SUV')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
                 .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
                 .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
@@ -115,7 +111,6 @@ describe('Rent car - Car', () => {
                 .field('car_door', 20)
                 .field('car_ac', 1)
                 .field('car_type', 'SUV')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
                 .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
                 .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
@@ -139,7 +134,6 @@ describe('Rent car - Car', () => {
                 .field('car_door', 2)
                 .field('car_ac', 1)
                 .field('car_type', 'Tank')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
                 .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
                 .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
@@ -147,30 +141,6 @@ describe('Rent car - Car', () => {
                     response.should.have.status(400)
                     response.body.should.be.a('object')
                     response.body.should.have.property('message').eq('Type only accept Sedan, SUV or Truck as value. Found: Tank.')
-                    done()
-                })
-        });
-
-        it("It should return error because car status has wrong value.", (done) => {
-            chai.request(server)
-                .post('/api/car/cardata/A1111AA')
-                .set('content-type', 'multipart/form-data')
-                .field('car_manufacturer', 'BMW')
-                .field('car_model', 'X5')
-                .field('car_price', 100)
-                .field('car_passenger', 2)
-                .field('car_baggage', 1)
-                .field('car_door', 2)
-                .field('car_ac', 1)
-                .field('car_type', 'SUV')
-                .field('car_status', 'Rent')
-                .field('car_description', 'This is car description')
-                .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
-                .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
-                .end((err, response) => {
-                    response.should.have.status(400)
-                    response.body.should.be.a('object')
-                    response.body.should.have.property('message').eq('Status only accept Open or Leased as value. Found: Rent.')
                     done()
                 })
         });
@@ -187,7 +157,6 @@ describe('Rent car - Car', () => {
                 .field('car_door', 2)
                 .field('car_ac', 1)
                 .field('car_type', 'Sedan')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
                 .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
                 .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
@@ -204,7 +173,6 @@ describe('Rent car - Car', () => {
                     response.body.should.have.property('car_door').eq(2)
                     response.body.should.have.property('car_ac').eq(true)
                     response.body.should.have.property('car_type').eq('Sedan')
-                    response.body.should.have.property('car_status').eq('Open')
                     response.body.should.have.property('car_description').eq('This is car description')
                     response.body.should.have.property('car_user_id').eq(null)
                     response.body.should.have.property('car_images').length.should.not.be.eq(0)
@@ -224,10 +192,9 @@ describe('Rent car - Car', () => {
                 .field('car_door', 2)
                 .field('car_ac', 1)
                 .field('car_type', 'Sedan')
-                .field('car_status', 'Open')
                 .field('car_description', 'This is car description')
-                .attach(1, fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
-                .attach(1, fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
+                .attach('1', fs.readFileSync('tests/car10fl.jpg'), `${process.cwd()}/images/cardata/A1111AA/car10fl.jpg`)
+                .attach('0', fs.readFileSync('tests/car10r.jpeg'), `${process.cwd()}/images/cardata/A1111AA/car10r.jpeg`)
                 .end((err, response) => {
                     response.should.have.status(400)
                     response.body.should.be.a('object')
@@ -248,7 +215,6 @@ describe('Rent car - Car', () => {
                 'car_door': 2,
                 'car_ac': 1,
                 'car_type': 'SUV',
-                'car_status': 'Open',
                 'car_description': 'This is car description'
             }
             chai.request(server)
@@ -272,7 +238,6 @@ describe('Rent car - Car', () => {
                 'car_door': 2,
                 'car_ac': 1,
                 'car_type': 'SUV',
-                'car_status': 'Open',
                 'car_description': 'This is car description'
             }
             chai.request(server)
@@ -296,7 +261,6 @@ describe('Rent car - Car', () => {
                 'car_door': 2,
                 'car_ac': 1,
                 'car_type': 'SUV',
-                'car_status': 'Open',
                 'car_description': 'This is car description'
             }
             chai.request(server)
@@ -320,7 +284,6 @@ describe('Rent car - Car', () => {
                 'car_door': 2,
                 'car_ac': 1,
                 'car_type': 'SUV',
-                'car_status': 'Open',
                 'car_description': 'This is car description'
             }
             chai.request(server)
@@ -344,7 +307,6 @@ describe('Rent car - Car', () => {
                 'car_door': 20,
                 'car_ac': 1,
                 'car_type': 'SUV',
-                'car_status': 'Open',
                 'car_description': 'This is car description'
             }
             chai.request(server)
@@ -368,7 +330,6 @@ describe('Rent car - Car', () => {
                 'car_door': 2,
                 'car_ac': 1,
                 'car_type': 'Tank',
-                'car_status': 'Open',
                 'car_description': 'This is car description'
             }
             chai.request(server)
@@ -378,30 +339,6 @@ describe('Rent car - Car', () => {
                     response.should.have.status(400)
                     response.body.should.be.a('object')
                     response.body.should.have.property('message').eq('Type only accept Sedan, SUV or Truck as value. Found: Tank.')
-                    done()
-                })
-        });
-
-        it("It should return error because car status has wrong value.", (done) => {
-            const car = {
-                'car_manufacturer': 'BMW',
-                'car_model': 'X5',
-                'car_price': 100,
-                'car_passenger': 2,
-                'car_baggage': 1,
-                'car_door': 2,
-                'car_ac': 1,
-                'car_type': 'SUV',
-                'car_status': 'Rent',
-                'car_description': 'This is car description'
-            }
-            chai.request(server)
-                .put('/api/car/1')
-                .send(car)
-                .end((err, response) => {
-                    response.should.have.status(400)
-                    response.body.should.be.a('object')
-                    response.body.should.have.property('message').eq('Status only accept Open or Leased as value. Found: Rent.')
                     done()
                 })
         });
@@ -416,7 +353,6 @@ describe('Rent car - Car', () => {
                 'car_door': 4,
                 'car_ac': 1,
                 'car_type': 'SUV',
-                'car_status': 'Open',
                 'car_description': 'This is new car description'
             }
             chai.request(server)
@@ -434,7 +370,6 @@ describe('Rent car - Car', () => {
                     response.body.should.have.property('car_door').eq(4)
                     response.body.should.have.property('car_ac').eq(true)
                     response.body.should.have.property('car_type').eq('SUV')
-                    response.body.should.have.property('car_status').eq('Open')
                     response.body.should.have.property('car_description').eq('This is new car description')
                     response.body.should.have.property('car_user_id').eq(null)
                     done()

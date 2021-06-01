@@ -9,7 +9,8 @@ const createOrder = async (req, res, next) => {
 
         const cart = req.existscartid
 
-        const { total_discount, total_due, total_days, total_car } = summary
+        let { total_discount, total_due, total_days, total_car } = summary
+        if (total_discount = 0 && total_car > 2) total_discount = total_due * 0.15
         const beforeTax = total_due - total_discount
         const order_tax = parseInt(0.1 * beforeTax)
         const afterTax = parseInt(beforeTax + order_tax)

@@ -96,7 +96,7 @@ const findOneCarNum = async (req, res, next) => {
 const createCar = async (req, res, next) => {
     try {
         if (req.existsnumber) return res.status(400).send({ message: 'Car number already exists.' })
-        let { car_manufacturer, car_model, car_price, car_passenger, car_baggage, car_door, car_ac, car_type, car_status, car_user_id, car_description } = req.dataUploaded.fields
+        let { car_manufacturer, car_model, car_price, car_passenger, car_baggage, car_door, car_ac, car_type, car_user_id, car_description } = req.dataUploaded.fields
 
         const car_number = req.params.number
         if (!car_number.match(/^[A-Z]+([0-9]+)([A-Z]+){2}$/)) return res.status(400).send({ message: 'Car number format is wrong.' })
@@ -121,9 +121,6 @@ const createCar = async (req, res, next) => {
         if (!car_type) return res.status(400).send({ message: 'Type can\'t be null.' })
         if (listType.indexOf(car_type) === -1) return res.status(400).send({ message: `Type only accept Sedan, SUV or Truck as value. Found: ${car_type}.` })
 
-        if (!car_status) return res.status(400).send({ message: 'Status can\'t be null.' })
-        if (listStatus.indexOf(car_status) === -1) return res.status(400).send({ message: `Status only accept Open or Leased as value. Found: ${car_status}.` })
-
         const car = await req.context.models.Car.create(
             {
                 car_number: car_number,
@@ -135,7 +132,6 @@ const createCar = async (req, res, next) => {
                 car_door: car_door,
                 car_ac: car_ac,
                 car_type: car_type,
-                car_status: car_status,
                 car_description: car_description,
                 car_user_id: car_user_id
             }
@@ -156,7 +152,7 @@ const updateCar = async (req, res) => {
         if (!oldCar) return res.status(404).send({ message: 'Car to be updated not found.' })
 
         if (isNaN(req.params.id) || req.params.id < 0) return res.status(400).send({ message: 'ID of the car to be updated is null or has wrong type.' })
-        let { car_manufacturer, car_model, car_price, car_passenger, car_baggage, car_door, car_ac, car_type, car_status, car_description, car_user_id } = req.body
+        let { car_manufacturer, car_model, car_price, car_passenger, car_baggage, car_door, car_ac, car_type, car_description, car_user_id } = req.body
 
         if (!car_manufacturer) car_manufacturer = oldCar.car_manufacturer
         if (!car_model) car_model = oldCar.car_model
@@ -179,9 +175,6 @@ const updateCar = async (req, res) => {
         if (car_type === undefined) car_type = oldCar.car_type
         if (listType.indexOf(car_type) === -1) return res.status(400).send({ message: `Type only accept Sedan, SUV or Truck as value. Found: ${car_type}.` })
 
-        if (car_status === undefined) car_status = oldCar.car_status
-        if (listStatus.indexOf(car_status) === -1) return res.status(400).send({ message: `Status only accept Open or Leased as value. Found: ${car_status}.` })
-
         if (car_description === undefined) car_description = oldCar.car_description
 
         const newCar = await req.context.models.Car.update(
@@ -194,7 +187,6 @@ const updateCar = async (req, res) => {
                 car_door: car_door,
                 car_ac: car_ac,
                 car_type: car_type,
-                car_status: car_status,
                 car_description: car_description,
                 car_user_id: car_user_id
             },

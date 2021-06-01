@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "build": "webpack --config webpack.config.client.production.js $$ webpack --mode=production --config webpack.config.server.js",
+    "test:user": "mocha --require @babel/register ./tests/UserTest.js",
     "test:car": "mocha --require @babel/register ./tests/CarTest.js",
     "prod": "set NODE_ENV=production node ./dist/server.generated.js",
     "reverse:db": "sequelize-auto -o ./schema-reverse -d rentcar -h localhost -u postgres -x admin -e postgres"

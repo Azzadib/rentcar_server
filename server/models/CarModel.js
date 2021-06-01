@@ -44,10 +44,6 @@ const car = (sequelize, DataTypes) => {
       type: DataTypes.STRING(15),
       allowNull: true
     },
-    car_status: {
-      type: DataTypes.STRING(15),
-      allowNull: true
-    },
     car_description: {
       type: DataTypes.STRING(500),
       allowNull: true
