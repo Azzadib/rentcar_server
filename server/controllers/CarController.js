@@ -95,22 +95,23 @@ const findOneCarNum = async (req, res, next) => {
 
 const createCar = async (req, res, next) => {
     try {
-        if (req.existsnumber) return res.status(500).send({ message: 'Car number already exists.' })
+        if (req.existsnumber) return res.status(400).send({ message: 'Car number already exists.' })
         let { car_manufacturer, car_model, car_price, car_passenger, car_baggage, car_door, car_ac, car_type, car_status, car_user_id, car_description } = req.dataUploaded.fields
-        const car_number = req.params.number
 
+        const car_number = req.params.number
         if (!car_number.match(/^[A-Z]+([0-9]+)([A-Z]+){2}$/)) return res.status(400).send({ message: 'Car number format is wrong.' })
+
         if (isNaN(car_price)) return res.status(400).send({ message: `Price should be a number. Found: ${car_price}.` })
         if (car_price < 0) return res.status(400).send({ message: `Price should be a positive number.  Found: ${car_price}.` })
 
-        if (isNaN(car_passenger)) return res.status(400).send({ message: 'Passenger should be a number.' })
+        if (isNaN(car_passenger)) return res.status(400).send({ message: `Passenger should be a number. Found: ${car_passenger}.` })
         car_passenger = parseInt(car_passenger)
         if (listPassenger.indexOf(car_passenger) === -1) return res.status(400).send({ message: `Passenger only accept 2, 3, 5, 8 or 10 as value. Found: ${car_passenger}.` })
 
         car_baggage = parseInt(car_baggage)
         if (car_baggage !== 0 && car_baggage !== 1) return res.status(400).send({ message: `Baggage should be 0 or 1. Found: ${car_baggage}.` })
 
-        if (isNaN(car_door)) return res.status(400).send({ message: 'Door should be a number.' })
+        if (isNaN(car_door)) return res.status(400).send({ message: `Door should be a number. Found: ${car_door}.` })
         car_door = parseInt(car_door)
         if (listDoor.indexOf(car_door) === -1) return res.status(400).send({ message: `Door only accept 2, 4 or 5 as value. Found: ${car_door}.` })
 
@@ -154,32 +155,32 @@ const updateCar = async (req, res) => {
         const oldCar = req.existscar
         if (!oldCar) return res.status(404).send({ message: 'Car to be updated not found.' })
 
-        if (isNaN(req.params.id) || req.params.id < 0) return res.status(400).send({ message: 'ID of the car to be updated is not null or has wrong type.' })
+        if (isNaN(req.params.id) || req.params.id < 0) return res.status(400).send({ message: 'ID of the car to be updated is null or has wrong type.' })
         let { car_manufacturer, car_model, car_price, car_passenger, car_baggage, car_door, car_ac, car_type, car_status, car_description, car_user_id } = req.body
 
         if (!car_manufacturer) car_manufacturer = oldCar.car_manufacturer
         if (!car_model) car_model = oldCar.car_model
 
         if (car_price === undefined) car_price = oldCar.car_price
-        if (isNaN(car_price) || car_price < 0) res.status(400).send({ message: 'Price should be a positive number.' })
+        if (isNaN(car_price) || car_price < 0) res.status(400).send({ message: `Price should be a positive number. Found: ${car_price}.` })
 
         if (car_passenger === undefined) car_passenger = oldCar.car_passenger
-        if (listPassenger.indexOf(car_passenger) === -1) return res.status(400).send({ message: 'Passenger only accept 2, 3, 5, 8 or 10 as value.' })
+        if (listPassenger.indexOf(car_passenger) === -1) return res.status(400).send({ message: `Passenger only accept 2, 3, 5, 8 or 10 as value. Found: ${car_passenger}.` })
 
         if (car_baggage === undefined) car_baggage = oldCar.car_baggage
-        else if (car_baggage !== 0 && car_baggage !== 1) return res.status(400).send({ message: 'Baggage should be 0 or 1.' })
+        else if (car_baggage !== 0 && car_baggage !== 1) return res.status(400).send({ message: `Baggage should be 0 or 1. Found: ${car_baggage}.` })
 
         if (car_door === undefined) car_door = oldCar.car_door
-        if (listDoor.indexOf(car_door) === -1) return res.status(400).send({ message: 'Door only accept 2, 4 or 5 as value.' })
+        if (listDoor.indexOf(car_door) === -1) return res.status(400).send({ message: `Door only accept 2, 4 or 5 as value. Found: ${car_door}.` })
 
         if (car_ac === undefined) car_ac = oldCar.car_ac
-        else if (car_ac !== 0 && car_ac !== 1) return res.status(400).send({ message: 'Ac should be 0 or 1.' })
+        else if (car_ac !== 0 && car_ac !== 1) return res.status(400).send({ message: `Ac should be 0 or 1. Found: ${car_ac}.` })
 
         if (car_type === undefined) car_type = oldCar.car_type
-        if (listType.indexOf(car_type) === -1) return res.status(400).send({ message: 'Type only accept Sedan, SUV or Truck as value.' })
+        if (listType.indexOf(car_type) === -1) return res.status(400).send({ message: `Type only accept Sedan, SUV or Truck as value. Found: ${car_type}.` })
 
         if (car_status === undefined) car_status = oldCar.car_status
-        if (listStatus.indexOf(car_status) === -1) return res.status(400).send({ message: 'Status only accept Open or Leased as value.' })
+        if (listStatus.indexOf(car_status) === -1) return res.status(400).send({ message: `Status only accept Open or Leased as value. Found: ${car_status}.` })
 
         if (car_description === undefined) car_description = oldCar.car_description
 

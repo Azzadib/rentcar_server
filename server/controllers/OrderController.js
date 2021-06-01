@@ -6,7 +6,6 @@ const createOrder = async (req, res, next) => {
         const summary = req.summary
         if (!summary) return res.status(404).send({ message: 'Order summary not found.' })
         if (summary.lite_status !== 'checkout') return res.status(400).send({ message: 'All car need to proceed to checkout to be ordered.' })
-        console.log(`first: ${summary}`)
 
         const cart = req.existscartid
 
